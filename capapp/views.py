@@ -3,8 +3,10 @@ from django.contrib import messages
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
+from .models import Student, Guardian, StudentPrev, Teacher
 
 
+@login_required
 def home_page(request):
     return render(request, 'blog/home.html')
 
@@ -51,18 +53,45 @@ def register_page(request):
         user.save()
         
         messages.info(request, "Account created Successfully! Please return to login.")
-        return redirect('/login/') # Changed to redirect to /login/ directly
+        return redirect('/login/')
     
     return render(request, 'blog/register.html')
-
+@login_required
 def teacher_page(request):
-    return render(request, 'capapp/home.html')
+    return render(request, 'blog/home.html')
 
 def guardian_page(request):
-    return render(request, 'capapp/guardian.html')
+    guardians = Guardian.objects.all()
+    return render(request, 'guardian_list.html', {'guardians': guardians})
+@login_required
+def all_students_view(request):
+    all_global_students = Student.objects.all()
+    
+    context = {
+        'students_data': all_global_students,
+        'page_title': 'All Enrolled Students'
+    }
+    return render(request, 'student_list.html', context)
 
+@login_required
+def my_students_view(request):
+    try:
+        current_teacher = Teacher.objects.get(teacher=request.user)
+        my_assigned_students = StudentPrev.objects.filter(teacher=request.user)
+    except Teacher.DoesNotExist:
+        my_assigned_students = StudentPrev.objects.none()
+    
+    context = {
+        'students_data': my_assigned_students,
+        'page_title': 'My Assigned Roster'
+    }
+    return render(request, 'blog/student_list.html', context)
+
+@login_required
 def student_scan(request):
-    return render(request, 'capapp/student_scan.html')
+    return render(request, 'student_scan.html')
 
+@login_required
 def student_list(request):
-    return render(request, 'capapp/student_list.html')
+    assigned_students = StudentPrev.objects.all() 
+    return render(request, 'student_list.html', {'students_data': assigned_students, 'page_title': 'All Assigned Previews'})

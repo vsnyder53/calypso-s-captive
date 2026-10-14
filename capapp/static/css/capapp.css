@@ -23,14 +23,16 @@ body {
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.15);
 }
 
-
-
-.top-menu{
-    display:flex;
+.top-menu,
+.top-menu:hover,
+.top-menu:visited {
+    display: inline-flex;
     align-items: center;
     gap: 20px;
     text-decoration: none;
-    color:#475783
+    color: #c2cff3 !important; 
+    font-size: 26pt;
+    line-height: 1 !important;
 }
 
 .top-menu svg {
@@ -44,7 +46,6 @@ body {
     transition: transform 0.2s ease;
 }
 
-
 .top-menu svg:hover {
     transform: scale(1.1);
 }
@@ -56,13 +57,12 @@ body {
 .page-header {
     background-color: #5694ea;
     margin-top: 0;
-    padding: 30px 20px;
     margin-bottom: 40px;
     padding: 20px 20px 20px 40px;
 }
 
 .page-header h1 a, 
-.page-header h1 a:visit, 
+.page-header h1 a:visited, 
 .page-header h1 a:active {
     font-family: 'Lobster', cursive;
     color: #000000;
@@ -74,20 +74,6 @@ body {
     color: #6c0303;
 }
 
-.top-menu,
-.top-menu:hover,
-.top-menu :visited {
-    float: right;
-    font-size: 1.2rem;
-    color: #000000;
-    font-size: 26pt;
-    padding-top: 10pt;
-    display: inline-flex;
-    align-items: center;
-    line-height: 1 !important;
-}
-
-
 .card {
     border-radius: 12px;
     transition: transform 0.15s ease-in-out;
@@ -97,7 +83,6 @@ body {
     transform: translateY(-2px);
 }
 
-/* Custom Homepage Styles */
 .welcome-container {
     text-align: center;
     margin: 100px auto;
@@ -109,7 +94,6 @@ body {
 }
 
 .welcome-heading {
-    float: center;
     color: rgb(177, 85, 223);
     font-weight: bold;
 }
@@ -117,6 +101,7 @@ body {
 .welcome-container img {
     width: 60%;
 }
+
 
 .btn-custom-blue {
     background-color: #5694ea !important;
@@ -132,8 +117,6 @@ body {
     background-color: #3b7fd8 !important;
     color: #000000 !important;
 }
-
-
 
 nav {
     display: flex;
@@ -160,7 +143,7 @@ nav ul li a {
     text-decoration: none !important;
     font-size: 1.25rem;
     font-weight: bold;
-    color: #ffffff !important;
+    color: #becdfb !important;
     background-color: #5694ea;
     padding: 16px 24px;
     border-radius: 10px;

@@ -9,7 +9,7 @@
   </head>
     <header class="page-header" style="background-color: #5694ea; padding: 40px 20px; text-align: center; margin-bottom: 40px;">
         <div class="header-spacer"></div>
-            <h1 style="font-family: 'Lobster', sans-serif" class="main-heading">What would you like to do today?</h1>
+            <h1 style="font-family: 'Lobster', sans-serif, color=rgb(183, 190, 255)" class="main-heading">What would you like to do today?</h1>
                     <a href="{% url 'home' %}" class="top-menu">
             {% include './icons/justify.svg' %}
             {% include './icons/plus-square.svg' %}
@@ -19,9 +19,9 @@
     {% if request.resolver_match.url_name == 'home' %}
     <nav>
       <ul>
-        <li><a href="{% url 'Teacher' %}">My Students</a></li>
-        <li><a href="{% url 'guardian' %}">Guardian List</a></li>
-        <li><a href="{% url 'student_list' %}">All Students</a></li>
+        <li><a href="{% url 'my_students' %}">My Students</a></li>
+        <li><a href="{% url 'guardian' %}">All Guardians</a></li>
+        <li><a href="{% url 'all_students' %}">All Students</a></li>
         <li><a href="{% url 'student_scan' %}">All Students' Scans</a></li>
       </ul>
     </nav>

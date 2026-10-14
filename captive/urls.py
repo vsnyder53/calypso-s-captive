@@ -23,19 +23,17 @@ from django.conf.urls.static import static
 from capapp import views
 
 # Define URL patterns
-urlpatterns = [
-    path('home/', views.home_page, name="home"), 
-    path('home/list/', views.home_page, name="StudenList"),               
+urlpatterns=[
+    path('home/', views.teacher_page, name="home"), 
     path("admin/", admin.site.urls),                 
-    path('login/', login_page, name='login_page'),    
-    path('register/', register_page, name='register'),
-    path('student_list/', teacher_page, name='Teacher'),
-    path('guardian', guardian_page, name='guardian'),
-    path('student_scan', student_scan, name='student_scan'),
-    path('student_list', student_list, name='student_list'),
+    path('login/', views.login_page, name='login_page'),    
+    path('register/', views.register_page, name='register'),
+    path('my-students/', views.my_students_view, name='my_students'),
+    path('guardian/', views.guardian_page, name='guardian'),
+    path('all-students/', views.all_students_view, name='all_students'),
+    path('student_scan/', views.student_scan, name='student_scan'),
 ]
 
-# Serve media files in development mode
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
