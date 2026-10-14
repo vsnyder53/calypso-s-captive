@@ -7,15 +7,40 @@
     <title>home</title>
     <link rel="stylesheet" href="{% static 'css/capapp.css' %}?v=7">
   </head>
-    <header class="page-header" style="background-color: #5694ea; padding: 40px 20px; text-align: center; margin-bottom: 40px;">
-        <div class="header-spacer"></div>
-            <h1 style="font-family: 'Lobster', sans-serif, color=rgb(183, 190, 255)" class="main-heading">What would you like to do today?</h1>
-                    <a href="{% url 'home' %}" class="top-menu">
-            {% include './icons/justify.svg' %}
-            {% include './icons/plus-square.svg' %}
-        </a>
+  <body>
+    <header class="page-header" style="background-color: #5694ea; padding: 20px 20px 20px 40px; margin-top: 0; margin-bottom: 40px;">
+        <div class="header-container-flex" style="max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center;">
+            
+            <div class="header-spacer" style="width: 84px;"></div>
+
+            <h1 class="main-heading" style="font-family: 'Lobster', sans-serif !important; color: #ebecef !important; font-size: 32pt; margin: 0; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.15);">
+                What would you like to do today?
+            </h1>
+
+            <div class="custom-dropdown-wrapper" style="position: relative; display: inline-block;">
+                <button class="dropdown-trigger-btn" type="button" style="background: transparent; border: none; padding: 0; margin: 0; color: inherit; cursor: pointer; display: flex; align-items: center;">
+                    {% include './icons/plus-square.svg' %}
+                </button>
+        
+                <ul class="dropdown-actions-menu" style="position: absolute; top: 100%; right: 0; z-index: 1050; list-style-type: none !important; padding: 8px 0 !important; margin: 8px 0 0 0 !important; background-color: #1a1a1a !important; border: 1px solid #333333; border-radius: 8px; width: 180px; box-shadow: 0 8px 16px rgba(0, 0, 0, 0.45); text-align: left;">
+                    <li style="width: 100%; margin: 0 !important; padding: 0 !important;">
+                        <a href="{% url 'add_student' %}" style="display: block; padding: 10px 16px; color: #ffffff !important; text-decoration: none !important; font-size: 11pt; font-weight: 500;">Add New Student</a>
+                    </li>
+                    <li style="width: 100%; margin: 0 !important; padding: 0 !important;">
+                        <a href="{% url 'add_guardian' %}" style="display: block; padding: 10px 16px; color: #ffffff !important; text-decoration: none !important; font-size: 11pt; font-weight: 500;">Add New Guardian</a>
+                    </li>
+                    <li style="width: 100%; margin: 0 !important; padding: 0 !important;">
+                        <a href="{% url 'add_payment' %}" style="display: block; padding: 10px 16px; color: #ffffff !important; text-decoration: none !important; font-size: 11pt; font-weight: 500;">Add Payment</a>
+                    </li>
+                    <li style="width: 100%; margin: 0 !important; padding: 0 !important;">
+                        <a href="{% url 'student_scan' %}" style="display: block; padding: 10px 16px; color: #ffffff !important; text-decoration: none !important; font-size: 11pt; font-weight: 500;">Run Student Scanner</a>
+                    </li>
+                </ul>
+            </div>
+
         </div>
     </header>
+
     {% if request.resolver_match.url_name == 'home' %}
     <nav>
       <ul>
@@ -34,6 +59,7 @@
 
   </body>
 </html>
+
 
 
 

@@ -32,6 +32,11 @@ urlpatterns=[
     path('guardian/', views.guardian_page, name='guardian'),
     path('all-students/', views.all_students_view, name='all_students'),
     path('student_scan/', views.student_scan, name='student_scan'),
+    path('add-student/', views.add_student_view, name='add_student'),
+    path('add-guardian/', views.add_guardian_view, name='add_guardian'),
+    path('add-payment/', views.add_payment_view, name='add_payment'),
+    path('student_scan/', views.student_scan, name='add_student_scan'),
+    path('student/profile/<str:student_id>/', views.student_profile_view, name='student_profile'),
 ]
 
 if settings.DEBUG:

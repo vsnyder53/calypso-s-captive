@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="scan-container">
+    <h2>Student Center Scanner</h2>
+    
+    <div class="welcome-banner">
+        <h3>Welcome to the Student Center</h3>
+    </div>
+
+    {% if messages %}
+        <div class="scan-messages">
+            {% for message in messages %}
+                <p class="{{ message.tags }}">{{ message }}</p>
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    <form method="POST" action="{% url 'student_scan' %}" class="scan-form">
+        {% csrf_token %}
+        <div class="input-group">
+            <label for="student_id">Scan Student ID Badge:</label>
+            <input 
+                type="text" 
+                id="student_id" 
+                name="studentID" 
+                placeholder="Ready for scan..." 
+                required 
+                autofocus 
+                autocomplete="off"
+            >
+        </div>
+        <button type="submit" class="scan-btn">Submit Scan</button>
+    </form>
+</div>
+
+<script>
+    const scanInput = document.getElementById('student_id');
+    document.addEventListener('click', () => {
+        scanInput.focus();
+    });
+</script>
+{% endblock %}

@@ -1,0 +1,127 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Create Guardian Profile</title>
+    <link rel="stylesheet" href="https://jsdelivr.net" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    
+    <style>
+        body {
+            background-color: #000000;
+            color: #ffffff;
+            font-family: sans-serif;
+        }
+        .form-container-card {
+            background-color: #111111;
+            border: 1px solid #222222;
+            border-radius: 14px;
+            padding: 35px;
+            max-width: 600px;
+            margin: 40px auto;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.7);
+        }
+        .form-section-title {
+            color: #5694ea;
+            font-size: 1.15rem;
+            border-bottom: 1px solid #333;
+            padding-bottom: 6px;
+            margin-bottom: 16px;
+            font-weight: bold;
+        }
+        .form-field-row {
+            margin-bottom: 16px;
+        }
+        label {
+            color: #9ebffb;
+            font-size: 10.5pt;
+            font-weight: 600;
+            margin-bottom: 6px;
+            display: block;
+        }
+        input[type="text"], input[type="email"], select {
+            width: 100%;
+            background-color: #050505 !important;
+            border: 1px solid #333333 !important;
+            color: #ffffff !important;
+            padding: 10px 14px;
+            border-radius: 8px;
+            font-size: 11pt;
+            transition: border-color 0.2s ease;
+        }
+        input:focus, select:focus {
+            border-color: #5694ea !important;
+            outline: none;
+        }
+        select[multiple] option {
+            padding: 6px;
+            background-color: #111;
+        }
+        select[multiple] option:checked {
+            background-color: #5694ea !important;
+            color: black !important;
+        }
+    </style>
+</head>
+<body>
+
+    <header class="page-header" style="background-color: #5694ea; padding: 30px 20px; text-align: center;">
+        <h1 style="font-family: 'Lobster', sans-serif !important; color: #ffffff; margin: 0; font-size: 32pt;">
+            Add New Guardian
+        </h1>
+    </header>
+
+    <main class="container">
+    <div class="form-container-card" style="background-color: #111111; border: 1px solid #222222; border-radius: 14px; padding: 35px; max-width: 650px; margin: 40px auto; box-shadow: 0 10px 30px rgba(0,0,0,0.7);">
+        <form method="POST" action="{% url 'add_guardian' %}">
+            {% csrf_token %}
+            
+            <div class="form-section-title" style="color: #5694ea; font-size: 1.15rem; border-bottom: 1px solid #333; padding-bottom: 6px; margin-top: 0; margin-bottom: 14px; font-weight: bold;">Identity & Family Relationship</div>
+            
+            <div class="form-field-row" style="margin-bottom: 20px;">
+                <label style="color: #9ebffb; font-size: 10.5pt; font-weight: 600; margin-bottom: 6px; display: block;">First Name</label>
+                {{ form.firstName }}
+            </div>
+
+            <div class="form-field-row" style="margin-bottom: 20px;">
+                <label style="color: #9ebffb; font-size: 10.5pt; font-weight: 600; margin-bottom: 6px; display: block;">Middle Initial</label>
+                {{ form.middleInitial }}
+            </div>
+
+            <div class="form-field-row" style="margin-bottom: 20px;">
+                <label style="color: #9ebffb; font-size: 10.5pt; font-weight: 600; margin-bottom: 6px; display: block;">Last Name</label>
+                {{ form.lastname }}
+            </div>
+
+            <div class="form-field-row" style="margin-bottom: 20px;">
+                <label style="color: #9ebffb; font-size: 10.5pt; font-weight: 600; margin-bottom: 6px; display: block;">Associated Student</label>
+                {{ form.student }}
+            </div>
+
+            <div class="form-section-title" style="color: #5694ea; font-size: 1.15rem; border-bottom: 1px solid #333; padding-bottom: 6px; margin-top: 24px; margin-bottom: 14px; font-weight: bold;">Primary Contact Channels</div>
+            
+            <div class="form-field-row" style="margin-bottom: 20px;">
+                <label style="color: #9ebffb; font-size: 10.5pt; font-weight: 600; margin-bottom: 6px; display: block;">Phone Number</label>
+                {{ form.phone }}
+            </div>
+
+            <div class="form-field-row" style="margin-bottom: 20px;">
+                <label style="color: #9ebffb; font-size: 10.5pt; font-weight: 600; margin-bottom: 6px; display: block;">Street Address</label>
+                {{ form.address }}
+            </div>
+
+            <div class="form-field-row" style="margin-bottom: 20px;">
+                <label style="color: #9ebffb; font-size: 10.5pt; font-weight: 600; margin-bottom: 6px; display: block;">City</label>
+                {{ form.city }}
+            </div>
+
+            <button type="submit" class="btn mt-4 w-100 fw-bold" style="background-color: #5694ea; color: #000000; padding: 14px; border-radius: 8px; font-size: 12pt; width: 100%;">
+                Register Guardian Profile
+            </button>
+        </form>
+    </div>
+</main>
+
+</body>
+</html>

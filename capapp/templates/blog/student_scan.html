@@ -1,0 +1,75 @@
+{% extends 'blog/home.html' %}
+
+{% block content %}
+<div class="scan-card-wrapper" style="max-width: 500px; margin: 40px auto; padding: 30px; background-color: #1a1a1a; border: 1px solid #333333; border-radius: 8px; color: #ffffff; text-align: center; box-shadow: 0 4px 15px rgba(0,0,0,0.5);">
+    
+    <h2 style="font-family: 'Lobster', sans-serif; color: #5694ea; font-size: 24pt; margin-bottom: 20px;">
+        Welcome to the Student Center
+    </h2>
+    <h3 style="font-size: 14pt; color: #ebecef; margin-bottom: 25px;">Select Student & Upload Document</h3>
+
+    <!-- Message Alerts for Scan Status Feedback -->
+    {% if messages %}
+        <div class="scan-alerts" style="margin-bottom: 20px; text-align: left;">
+            {% for message in messages %}
+                <p style="padding: 10px 15px; border-radius: 4px; font-weight: bold; margin: 0 0 10px 0; background-color: #2b2b2b; color: #5694ea; border-left: 4px solid #5694ea;">
+                    {{ message }}
+                </p>
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    <form method="POST" action="{% url 'student_scan' %}" enctype="multipart/form-data" class="scanner-form">
+        {% csrf_token %}
+        
+        <!-- CHANGED: Dropped manual input text box for a cleaner dropdown selection layout -->
+        <div class="input-field-group" style="margin-bottom: 20px; text-align: left;">
+            <label for="student_id_select" style="display: block; font-size: 11pt; font-weight: 600; margin-bottom: 8px; color: #ebecef;">
+                Select Student from List:
+            </label>
+            <select 
+                id="student_id_select" 
+                name="studentID" 
+                required
+                style="width: 100%; padding: 12px; font-size: 11pt; background-color: #000000; border: 2px solid #333333; border-radius: 4px; color: #ffffff; box-sizing: border-box; cursor: pointer; -webkit-appearance: none; appearance: none;"
+            >
+                <option value="" disabled selected>-- Choose a Student --</option>
+                {% for student in students_list %}
+                    <!-- Value passes the numerical ID token, displaying clear text names to the teacher -->
+                    <option value="{{ student.studentID }}">
+                        {{ student.lastname }}, {{ student.firstName }} (ID: {{ student.studentID }})
+                    </option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <!-- File Upload Input Node Block -->
+        <div class="input-field-group" style="margin-bottom: 25px; text-align: left;">
+            <label for="scanned_document" style="display: block; font-size: 11pt; font-weight: 600; margin-bottom: 8px; color: #ebecef;">
+                Upload Student File (PDF, Image, or Doc):
+            </label>
+            <input 
+                type="file" 
+                id="scanned_document" 
+                name="scannedDocument"
+                accept="application/pdf, image/*"
+                style="width: 100%; padding: 10px; font-size: 10.5pt; background-color: #000000; border: 1px dashed #5694ea; border-radius: 4px; color: #ebecef; box-sizing: border-box; cursor: pointer;"
+            >
+        </div>
+
+        <button type="submit" class="scanner-submit-btn" style="width: 100%; padding: 12px; background-color: #5694ea; color: #000000; border: none; border-radius: 4px; font-size: 12pt; font-weight: bold; cursor: pointer; margin-bottom: 15px;">
+            Submit Scan & File
+        </button>
+    </form>
+
+    <hr style="border: 0; border-top: 1px solid #333333; margin: 20px 0;">
+
+    <div class="home-return-wrapper">
+        <a href="{% url 'home' %}" class="home-btn" style="display: block; width: 100%; padding: 12px; background-color: #2b2b2b; color: #ffffff; text-decoration: none; border: 1px solid #444444; border-radius: 4px; font-size: 12pt; font-weight: bold; box-sizing: border-box; text-align: center;">
+            Back to Home Dashboard
+        </a>
+    </div>
+
+</div>
+{% endblock %}
+

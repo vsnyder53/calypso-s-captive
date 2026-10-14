@@ -1,0 +1,108 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Process Billing Payment</title>
+    <link rel="stylesheet" href="https://jsdelivr.net" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    
+    <style>
+        body {
+            background-color: #000000;
+            color: #ffffff;
+            font-family: sans-serif;
+        }
+        .form-container-card {
+            background-color: #111111;
+            border: 1px solid #222222;
+            border-radius: 14px;
+            padding: 35px;
+            max-width: 550px;
+            margin: 40px auto;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.7);
+        }
+        .form-section-title {
+            color: #5694ea;
+            font-size: 1.15rem;
+            border-bottom: 1px solid #333;
+            padding-bottom: 6px;
+            margin-bottom: 20px;
+            font-weight: bold;
+        }
+        .form-field-row {
+            margin-bottom: 18px;
+        }
+        label {
+            color: #9ebffb;
+            font-size: 10.5pt;
+            font-weight: 600;
+            margin-bottom: 6px;
+            display: block;
+        }
+        input[type="text"], input[type="number"], input[type="date"], select {
+            width: 100%;
+            background-color: #050505 !important;
+            border: 1px solid #333333 !important;
+            color: #ffffff !important;
+            padding: 10px 14px;
+            border-radius: 8px;
+            font-size: 11pt;
+            transition: border-color 0.2s ease;
+        }
+        input:focus, select:focus {
+            border-color: #5694ea !important;
+            outline: none;
+        }
+    </style>
+</head>
+<body>
+
+    <header class="page-header" style="background-color: #5694ea; padding: 30px 20px; text-align: center;">
+        <h1 style="font-family: 'Lobster', sans-serif !important; color: #ffffff; margin: 0; font-size: 32pt;">
+            Record Transaction Payment
+        </h1>
+    </header>
+
+    <main class="container">
+        <div class="form-container-card">
+            <form method="POST" action="{% url 'add_payment' %}">
+                {% csrf_token %}
+                
+                <div class="form-section-title">Billing Ledger Entry</div>
+                
+                <div class="form-field-row">
+                    <label>Select Target Student</label>
+                    {{ form.student }}
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6 form-field-row">
+                        <label>Amount Collected ($)</label>
+                        {{ form.amount }}
+                    </div>
+                    <div class="col-md-6 form-field-row">
+                        <label>Collection Method</label>
+                        {{ form.method }}
+                    </div>
+                </div>
+
+                <div class="form-field-row">
+                    <label>Payment Processing Date</label>
+                    {{ form.payment_date }}
+                </div>
+
+                <div class="form-field-row">
+                    <label>Reference Memo / Notes</label>
+                    {{ form.notes }}
+                </div>
+
+                <button type="submit" class="btn mt-4 w-100 fw-bold" style="background-color: #5694ea; color: #000000; padding: 14px; border-radius: 8px; font-size: 12pt;">
+                    Post Payment & Recompute Due Date
+                </button>
+            </form>
+        </div>
+    </main>
+
+</body>
+</html>

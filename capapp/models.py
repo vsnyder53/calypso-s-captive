@@ -73,9 +73,9 @@ class Student(models.Model):
 class Guardian(models.Model):
     guardian_id = models.CharField(max_length=100, unique=True, editable=False, blank=True)
     student = models.ForeignKey(Student, on_delete=models.CASCADE, related_name='guardians', null=True)
-    gfirstName = models.CharField(max_length=100)
-    gmiddleInitial = models.CharField(max_length=2, blank=True)
-    glastname = models.CharField(max_length=100)
+    firstName = models.CharField(max_length=100)
+    middleInitial = models.CharField(max_length=2, blank=True)
+    lastname = models.CharField(max_length=100)
     phone = models.CharField(max_length=20)
     address = models.CharField(max_length=80)
     city = models.CharField(max_length=80)
@@ -89,7 +89,7 @@ class Guardian(models.Model):
         super().save(*args, **kwargs)
 
     def __str__(self):
-        return f"Guardian: {self.gfirstName} {self.glastname} ({self.guardian_id})"
+        return f"Guardian: {self.firstName} {self.lastname} ({self.guardian_id})"
 
 
 class StudentScan(models.Model):

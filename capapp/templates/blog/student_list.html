@@ -4,7 +4,7 @@
     <head>
         <title>{{ page_title }}</title>
         <link rel="stylesheet" href="https://jsdelivr.net" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-        <link rel="stylesheet" href="{% static 'css/blog.css' %}">
+        <link rel="stylesheet" href="{% static 'css/capapp.css' %}">
     </head>
     <body style="background-color: #000000; color: #ffffff; margin: 0; padding: 0;">
         
@@ -15,27 +15,19 @@
         </header>
 
         <main class="container" style="max-width: 600px; margin: 0 auto; padding: 20px;">
-            {% for student in students_data %}
-                <article class="card p-3 mb-3 shadow-sm" style="background-color: #1a1a1a; border: 1px solid #333; border-radius: 10px;">
-                    <h2 style="font-size: 1.5rem; color: #5694ea; margin-bottom: 8px;">
-                        {{ student.title }}
-                    </h2>
-                    
-                    {% if student.calculate_payment_due_date %}
-                        <p style="color: #ffc107; font-weight: bold; margin-bottom: 4px;">
-                            Payment Due: {{ student.calculate_payment_due_date }}
-                        </p>
-                    {% endif %}
-                    
-                    <p style="color: #cccccc; margin: 0;">
-                        {{ student.text|linebreaksbr }}
-                    </p>
-                </article>
+    
+            {% for student in students_list %}
+                <div class="student-row-item">
+                    <a href="{% url 'student_profile' student.studentID %}" style="color: #5694ea; font-weight: bold; text-decoration: none;">
+                        {{ student.lastname }}, {{ student.firstName }}
+                    </a>
+                    <span>(ID: {{ student.studentID }})</span>
+                </div>
             {% empty %}
-                <p style="text-align: center; color: #6c757d; margin-top: 40px;">
-                    No student records found matching this list view criteria.
-                </p>
+                <p>No student records found.</p>
             {% endfor %}
+
         </main>
+
     </body>
 </html>
