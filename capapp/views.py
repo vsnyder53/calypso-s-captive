@@ -71,7 +71,7 @@ def guardian_page(request):
     for guardian in all_guardians:
         formatted_guardian_data.append({
             'title': f"{guardian.firstName} {guardian.lastName}",
-            'text': f" Phone: {guardian.phone}\nEmail: {guardian.email}"
+            'text': f" Phone: {guardian.phone}"
         })
         
     context = {
@@ -84,17 +84,20 @@ def guardian_page(request):
 @login_required
 def my_students_view(request):
     try:
-        current_teacher_profile = Teacher.objects.get(teacher=request.user)
-        my_assigned_students = Student.objects.filter(teacher=current_teacher_profile)
-        
-    except Teacher.DoesNotExist:
-        my_assigned_students = Student.objects.none()
-    
+        from .models import Teacher
+        current_teacher = Teacher.objects.get(user=request.user)
+        my_assigned_students = Student.objects.filter(teacher=current_teacher)
+        assigned_scans = StudentScan.objects.filter(teacher=current_teacher) 
+    except (Teacher.DoesNotExist, Exception):
+        my_assigned_students = []
+        assigned_scans = []
     context = {
-        'students_data': my_assigned_students,
-        'page_title': 'My Assigned Roster'
+        'pageTitle': 'My Assigned Students',
+        'studentsList': my_assigned_students,
+        'assignedStudents': assigned_scans,
     }
-    return render(request, 'blog/student_list.html', context)
+    return render(request, 'blog/my-students.html', context)
+
 
 def all_students_view(request):
     all_global_students = Student.objects.all()

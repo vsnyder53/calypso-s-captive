@@ -27,7 +27,7 @@ urlpatterns=[
     path("admin/", admin.site.urls),                 
     path('login/', views.login_page, name='login_page'),    
     path('register/', views.register_page, name='register'),
-    path('my-students/', views.my_students_view, name='my_students'),
+    path('my-students/', views.my_students_view, name='my-students'),    
     path('guardian/', views.guardian_page, name='guardian'),
     path('all-students/', views.all_students_view, name='all_students'),
     path('student_scan/', views.student_scan, name='student_scan'),

@@ -2,13 +2,12 @@
 
 {% block content %}
 <div class="all-students-container" style="max-width: 1000px; margin: 30px auto; padding: 0 20px; text-align: left;">
-
-    {% for student in students_list %}
+    {% for student in studentsList %}
     <div class="student-info-card" style="background-color: #1a1a1a; border: 1px solid #262626; border-radius: 12px; padding: 25px; margin-bottom: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.3); transition: transform 0.1s ease;">
         
         <h2 style="margin: 0 0 15px 0; font-size: 22pt; font-weight: bold;">
             <a href="{% url 'student_profile' student.studentID %}" style="color: #5694ea !important; text-decoration: none !important; transition: color 0.15s ease;">
-                {{ student.firstName }} {{ student.lastname }}
+                {{ student.firstName }} {{ student.lastName }}
             </a>
         </h2>
 
