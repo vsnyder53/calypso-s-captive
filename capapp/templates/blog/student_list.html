@@ -1,33 +1,56 @@
-{% load static %}
-<!DOCTYPE html>
-<html>
-    <head>
-        <title>{{ page_title }}</title>
-        <link rel="stylesheet" href="https://jsdelivr.net" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-        <link rel="stylesheet" href="{% static 'css/capapp.css' %}">
-    </head>
-    <body style="background-color: #000000; color: #ffffff; margin: 0; padding: 0;">
+{% extends 'blog/home.html' %}
+
+{% block content %}
+<div class="all-students-container" style="max-width: 1000px; margin: 30px auto; padding: 0 20px; text-align: left;">
+
+    {% for student in students_list %}
+    <div class="student-info-card" style="background-color: #1a1a1a; border: 1px solid #262626; border-radius: 12px; padding: 25px; margin-bottom: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.3); transition: transform 0.1s ease;">
         
-        <header class="page-header" style="background-color: #5694ea; padding: 40px 20px; text-align: center; margin-bottom: 40px;">
-            <h1 class="main-heading" style="font-family: 'Lobster', sans-serif !important;">
-                {{ page_title }}
-            </h1>
-        </header>
+        <h2 style="margin: 0 0 15px 0; font-size: 22pt; font-weight: bold;">
+            <a href="{% url 'student_profile' student.studentID %}" style="color: #5694ea !important; text-decoration: none !important; transition: color 0.15s ease;">
+                {{ student.firstName }} {{ student.lastname }}
+            </a>
+        </h2>
 
-        <main class="container" style="max-width: 600px; margin: 0 auto; padding: 20px;">
-    
-            {% for student in students_list %}
-                <div class="student-row-item">
-                    <a href="{% url 'student_profile' student.studentID %}" style="color: #5694ea; font-weight: bold; text-decoration: none;">
-                        {{ student.lastname }}, {{ student.firstName }}
-                    </a>
-                    <span>(ID: {{ student.studentID }})</span>
-                </div>
-            {% empty %}
-                <p>No student records found.</p>
-            {% endfor %}
+        <div class="student-details-grid" style="font-size: 13pt; line-height: 1.8; font-family: Arial, sans-serif;">
+            
+            <div style="margin-bottom: 4px;">
+                <strong style="color: #ffc107;">Next Payment Due:</strong> 
+                <span style="color: #ffc107; font-weight: bold;">{{ student.nextpayment|date:"M d, Y"|default:"No Date Assigned" }}</span>
+            </div>
+            
+            <div style="color: #ebecef; margin-bottom: 4px;">
+                <strong>Allergies:</strong> 
+                <span>{{ student.allergies|default:"None Disclosed" }}</span>
+            </div>
+            
+            <div style="color: #ebecef; margin-bottom: 4px;">
+                <strong>Medical Summary:</strong> 
+                <span>{{ student.medicalsummary|default:"None Disclosed" }}</span>
+            </div>
 
-        </main>
+            {% if student.authpickupName %}
+            <div style="color: #cccccc; margin-top: 4px; font-size: 11pt; font-style: italic;">
+                <strong>Authorized Pickup:</strong> {{ student.authpickupName }}
+            </div>
+            {% endif %}
 
-    </body>
-</html>
+        </div>
+
+    </div>
+    {% empty %}
+    <div class="student-info-card" style="background-color: #1a1a1a; border: 1px solid #333333; border-radius: 12px; padding: 40px; text-align: center; color: #888888; font-style: italic; font-size: 13pt;">
+        No active student records populated on this list dashboard.
+    </div>
+    {% endfor %}
+
+    <div class="action-footer" style="text-align: center; margin-top: 35px; margin-bottom: 5px;">
+        <a href="{% url 'home' %}" style="display: inline-block; padding: 12px 28px; background-color: #2b2b2b; color: #ffffff; text-decoration: none !important; border: 1px solid #444444; border-radius: 6px; font-weight: bold; font-size: 11pt; transition: background-color 0.15s ease;">
+            Back to Home Dashboard
+        </a>
+    </div>
+
+</div>
+{% endblock %}
+
+

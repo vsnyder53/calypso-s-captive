@@ -1,0 +1,58 @@
+{% extends 'blog/base.html' %}
+
+{% block content %}
+<div class="scans-log-container" style="max-width: 900px; margin: 40px auto; padding: 30px; background-color: #1a1a1a; border: 1px solid #333333; border-radius: 12px; color: #ffffff; box-shadow: 0 6px 20px rgba(0,0,0,0.4);">
+    
+    <h2 style="font-family: 'Lobster', Arial, sans-serif !important; color: #5694ea; font-size: 26pt; margin-bottom: 5px; text-align: center;">
+        All Students' Scans 
+    </h2>
+    <p style="color: #888888; font-size: 11pt; margin-top: 0; margin-bottom: 25px; text-align: center;">
+        Historical documentation files and document uploads tracking folder index.
+    </p>
+    <hr style="border: 0; border-top: 1px solid #2d2d2d; margin-bottom: 30px;">
+
+    <div class="scans-stack-wrapper" style="display: flex; flex-direction: column; gap: 15px;">
+        {% for scan in scans_list %}
+            <div class="scan-log-row" style="background-color: #0b0b0b; border: 1px solid #262626; border-radius: 8px; padding: 18px 20px; display: flex; justify-content: space-between; align-items: center; font-family: Arial, sans-serif;">
+                <div style="text-align: left;">
+                    <strong style="font-size: 13pt; color: #ffffff; display: block; margin-bottom: 4px;">
+                        {{ scan.student.studentName.firstName }} {{ scan.student.studentName.lastname }}
+                    </strong>
+                    <span style="color: #888888; font-size: 10pt; text-transform: uppercase; letter-spacing: 0.5px;">
+                        Student ID: <span style="color: #cccccc;">{{ scan.student.studentID }}</span>
+                    </span>
+                </div>
+
+                <div style="display: flex; align-items: center; gap: 20px; text-align: right;">
+                    <div style="font-size: 10.5pt; color: #ebecef;">
+                        <span style="font-weight: bold; display: block; color: #ffc107;">📄 Uploaded Document</span>
+                        <span style="color: #777777; font-size: 9.5pt;">Uploaded: {{ scan.uploaded_at|date:"M d, Y" }}</span>
+                    </div>
+                    {% if scan.pdf_file %}
+                        <a href="{{ scan.pdf_file.url }}" target="_blank" style="display: inline-block; padding: 6px 16px; background-color: #5694ea; color: #ffffff; text-decoration: none !important; border-radius: 4px; font-weight: bold; font-size: 10pt;">
+                            Open Scan
+                        </a>
+                    {% else %}
+                        <span style="color: #58151c; background-color: #f8d7da; padding: 6px 12px; border-radius: 4px; font-size: 10pt; font-weight: bold;">
+                            No File Found
+                        </span>
+                    {% endif %}
+                </div>
+
+    </div>
+{% empty %}
+    <div style="background-color: #0b0b0b; border: 1px dashed #333333; border-radius: 8px; padding: 40px; text-align: center; color: #777777; font-style: italic; font-size: 12pt;">
+        No historical scans or document files are currently logged in the system database folder.
+    </div>
+{% endfor %}        
+    </div>
+
+    <hr style="border: 0; border-top: 1px solid #2d2d2d; margin: 30px 0 20px 0;">
+    <div style="text-align: center;">
+        <a href="{% url 'home' %}" style="display: inline-block; padding: 12px 28px; background-color: #2b2b2b; color: #ffffff; text-decoration: none !important; border: 1px solid #444444; border-radius: 6px; font-weight: bold; font-size: 11pt;">
+            Back to Home Dashboard
+        </a>
+    </div>
+
+</div>
+{% endblock %}

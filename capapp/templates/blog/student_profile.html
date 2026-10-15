@@ -1,0 +1,114 @@
+{% extends 'blog/home.html' %}
+
+{% block content %}
+<div class="profile-page-container" style="max-width: 800px; margin: 40px auto; padding: 0 20px; text-align: left;">
+
+    <div class="full-profile-card" style="background-color: #1a1a1a; border: 1px solid #333333; border-radius: 12px; padding: 35px; box-shadow: 0 6px 20px rgba(0,0,0,0.4);">
+        
+        <div class="profile-header-ribbon" style="display: flex; justify-content: space-between; align-items: flex-start; border-bottom: 1px solid #2d2d2d; padding-bottom: 20px; margin-bottom: 25px;">
+            <div>
+                <h2 style="font-family: 'Lobster', Arial, sans-serif !important; color: #5694ea; font-size: 28pt; margin: 0 0 5px 0;">
+                    {{ student.firstName }} {{ student.lastname }}
+                </h2>
+                <span style="color: #888888; font-size: 11pt; font-weight: bold; letter-spacing: 0.5px; text-transform: uppercase;">
+                    🆔 Student ID: <span style="color: #ffffff;">{{ student.studentID }}</span>
+                </span>
+            </div>
+            <div class="status-badge-node" style="background-color: #0d3b19; color: #75b798; padding: 6px 14px; border-radius: 20px; font-size: 10pt; font-weight: bold; border: 1px solid #0f5132;">
+                Active Record
+            </div>
+        </div>
+
+        <div class="tab-navigation-bar" style="display: flex; border-bottom: 2px solid #2d2d2d; margin-bottom: 20px; gap: 5px;">
+            <button class="profile-tab-btn active-tab" onclick="switchProfileTab(event, 'general-info-tab')" style="background: none; border: none; padding: 10px 20px; color: #5694ea; font-weight: bold; font-size: 11pt; cursor: pointer; border-bottom: 3px solid #5694ea;">General Summary</button>
+            <button class="profile-tab-btn" onclick="switchProfileTab(event, 'view-scans-tab')" style="background: none; border: none; padding: 10px 20px; color: #888888; font-weight: bold; font-size: 11pt; cursor: pointer; border-bottom: 3px solid transparent;">View Scans ({{ scans_list|length|default:"0" }})</button>
+            <button class="profile-tab-btn" onclick="switchProfileTab(event, 'upload-scan-tab')" style="background: none; border: none; padding: 10px 20px; color: #888888; font-weight: bold; font-size: 11pt; cursor: pointer; border-bottom: 3px solid transparent;">➕ Upload New Scan</button>
+        </div>
+
+        <div class="tab-contents-container">
+
+            <div id="general-info-tab" class="profile-tab-panel" style="display: block;">
+                <div style="display: flex; flex-direction: column; gap: 20px;">
+                    <div style="background-color: #0b0b0b; border: 1px solid #222222; border-radius: 8px; padding: 20px;">
+                        <h4 style="margin: 0 0 12px 0; font-size: 12pt; color: #5694ea; text-transform: uppercase;">💰 Financial & Ledger Status</h4>
+                        <div style="color: #ebecef;"><strong style="color: #ffc107;">Next Payment Due Date:</strong> <span style="color: #ffc107; font-weight: bold;">{{ student.nextpayment|date:"F d, Y"|default:"No Payment Date Assigned" }}</span></div>
+                    </div>
+
+                    <div style="background-color: #0b0b0b; border: 1px solid #222222; border-radius: 8px; padding: 20px;">
+                        <h4 style="margin: 0 0 12px 0; font-size: 12pt; color: #5694ea; text-transform: uppercase;">👪 Associated Family Guardians</h4>
+                        {% for guardian in guardians_list %}
+                            <div style="background-color: #151515; border: 1px solid #2a2a2a; border-radius: 6px; padding: 12px 15px; margin-bottom: 10px; display: flex; justify-content: space-between;">
+                                <div>
+                                    <strong style="color: #ffffff;">{{ guardian.firstName }} {{ guardian.lastName }}</strong>
+                                    <br>
+                                    <span style="color: #888888; font-size: 9.5pt;">Relationship: Parent/Guardian</span>
+                                </div>
+                                <div style="text-align: right; font-size: 10pt; color: #cccccc;">
+                                    {% if guardian.phone %}<div> {{ guardian.phone }}</div>{% endif %}
+                                </div>
+                            {% empty %}
+                                <p style="color: #777777; font-style: italic; margin: 0;">No family guardians linked to this record.</p>
+                        {% endfor %}
+
+            <div id="view-scans-tab" class="profile-tab-panel" style="display: none;">
+                <div style="background-color: #0b0b0b; border: 1px solid #222222; border-radius: 8px; padding: 20px;">
+                    <h4 style="margin: 0 0 15px 0; font-size: 12pt; color: #5694ea; text-transform: uppercase;">History Scans Documentation Log</h4>
+                    <div style="display: flex; flex-direction: column; gap: 10px;">
+                        {% for scan in scans_list %}
+                            <div style="background-color: #151515; border: 1px solid #2a2a2a; border-radius: 6px; padding: 12px; display: flex; justify-content: space-between; align-items: center;">
+                                <div><span style="font-weight: bold; color: #ffffff;">📄 {{ scan.filename|default:"Scan File Document" }}</span><br><span style="color: #777777; font-size: 9.5pt;">Date: {{ scan.upload_date|date:"M d, Y" }}</span></div>
+                                <a href="{{ scan.file.url }}" target="_blank" style="padding: 6px 14px; background-color: #2b2b2b; color: #ffffff; text-decoration: none; border-radius: 4px; border: 1px solid #444444; font-size: 10pt; font-weight: bold;">Download/View</a>
+                            </div>
+                        {% empty %}
+                            <p style="color: #777777; font-style: italic; margin: 0; text-align: center; padding: 20px 0;">No historical scanned attachments linked to this student record.</p>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+
+            <div id="upload-scan-tab" class="profile-tab-panel" style="display: none;">
+                <div style="background-color: #0b0b0b; border: 1px solid #222222; border-radius: 8px; padding: 20px;">
+                    <h4 style="margin: 0 0 15px 0; font-size: 12pt; color: #5694ea; text-transform: uppercase;">Upload New Document</h4>
+                    <form method="POST" action="{% url 'student_scan' %}" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <input type="hidden" name="studentID" value="{{ student.studentID }}">
+                        
+                        <div style="margin-bottom: 20px;">
+                            <label for="profile_upload_doc" style="display: block; font-size: 10.5pt; font-weight: bold; margin-bottom: 8px; color: #ebecef;">Choose file attachment (PDF, Image, or Doc):</label>
+                            <input type="file" id="profile_upload_doc" name="scannedDocument" accept="application/pdf, image/*" required style="width: 100%; padding: 10px; background-color: #000000; border: 1px dashed #5694ea; border-radius: 4px; color: #ebecef; cursor: pointer;">
+                        </div>
+                        <button type="submit" style="width: 100%; padding: 12px; background-color: #5694ea; color: #000000; border: none; border-radius: 4px; font-size: 11pt; font-weight: bold; cursor: pointer;">Upload File to Student Folder</button>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+
+        <hr style="border: 0; border-top: 1px solid #2d2d2d; margin: 30px 0 20px 0;">
+
+        <div class="profile-footer-navigation" style="display: flex; justify-content: space-between;">
+            <a href="{% url 'all_students' %}" style="display: inline-block; padding: 10px 20px; background-color: #2b2b2b; color: #ffffff; text-decoration: none; border: 1px solid #444444; border-radius: 4px; font-weight: bold; font-size: 10.5pt;">⬅️ Back to Student List</a>
+            <a href="{% url 'home' %}" style="display: inline-block; padding: 10px 24px; background-color: #5694ea; color: #000000; text-decoration: none; font-weight: bold; font-size: 10.5pt; border-radius: 4px;">🏠 Dashboard Home</a>
+        </div>
+
+    </div>
+</div>
+
+<script>
+    function switchProfileTab(event, tabID) {
+        const tabPanels = document.getElementsByClassName('profile-tab-panel');
+        const tabButtons = document.getElementsByClassName('profile-tab-btn');
+        for (let i = 0; i < tabPanels.length; i++) {
+            tabPanels[i].style.display = 'none';
+        }
+        for (let i = 0; i < tabButtons.length; i++) {
+            tabButtons[i].style.color = '#888888';
+            tabButtons[i].style.borderBottomColor = 'transparent';
+        }
+        document.getElementById(tabID).style.display = 'block';
+        event.currentTarget.style.color = '#5694ea';
+        event.currentTarget.style.borderBottomColor = '#5694ea';
+    }
+</script>
+{% endblock %}
+

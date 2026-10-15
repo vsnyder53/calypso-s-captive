@@ -1,6 +1,11 @@
 @import url('https://googleapis.com');
 
+h1, h2, h3, h4, .main-heading {
+    font: sans-serif, !important; 
+}
+
 body {
+    font: sans-serif;
     background-color: #000000 !important; 
     color: #ffffff; 
     margin: 0;
@@ -16,7 +21,7 @@ body {
 }
 
 .main-heading {
-    font-family: 'Lobster', sans-serif !important;
+    font: sans-serif, !important;
     color: #ebecef !important;
     font-size: 32pt;
     margin: 0;

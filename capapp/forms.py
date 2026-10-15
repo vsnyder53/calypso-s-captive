@@ -29,12 +29,12 @@ class StudentForm(forms.ModelForm):
 class GuardianForm(forms.ModelForm):
     class Meta:
         model = Guardian
-        fields = ['student', 'firstName', 'middleInitial', 'lastname', 'phone', 'address', 'city']
+        fields = ['student', 'firstName', 'middleInitial', 'lastName', 'phone', 'address', 'city']
         
         widgets = {
             'firstName': forms.TextInput(attrs={'placeholder': 'Enter First Name'}),
             'middleInitial': forms.TextInput(attrs={'placeholder': 'Enter Middle Initial', 'maxlength': '2'}),
-            'lastname': forms.TextInput(attrs={'placeholder': 'Enter Last Name'}),
+            'lastName': forms.TextInput(attrs={'placeholder': 'Enter Last Name'}),
             'phone': forms.TextInput(attrs={'placeholder': 'Enter Phone Number'}),
             'address': forms.TextInput(attrs={'placeholder': 'Enter Street Address'}),
             'city': forms.TextInput(attrs={'placeholder': 'Enter City'}),

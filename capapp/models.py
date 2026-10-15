@@ -75,7 +75,7 @@ class Guardian(models.Model):
     student = models.ForeignKey(Student, on_delete=models.CASCADE, related_name='guardians', null=True)
     firstName = models.CharField(max_length=100)
     middleInitial = models.CharField(max_length=2, blank=True)
-    lastname = models.CharField(max_length=100)
+    lastName = models.CharField(max_length=100)
     phone = models.CharField(max_length=20)
     address = models.CharField(max_length=80)
     city = models.CharField(max_length=80)

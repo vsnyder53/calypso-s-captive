@@ -22,7 +22,6 @@ from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from django.conf.urls.static import static
 from capapp import views
 
-# Define URL patterns
 urlpatterns=[
     path('home/', views.teacher_page, name="home"), 
     path("admin/", admin.site.urls),                 
@@ -37,6 +36,7 @@ urlpatterns=[
     path('add-payment/', views.add_payment_view, name='add_payment'),
     path('student_scan/', views.student_scan, name='add_student_scan'),
     path('student/profile/<str:student_id>/', views.student_profile_view, name='student_profile'),
+    path('all_scans/', views.all_scans_view, name='all_scans'),
 ]
 
 if settings.DEBUG:

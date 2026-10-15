@@ -1,46 +1,50 @@
+{% extends 'blog/base.html' %}
 {% load static %}
-<!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <title>Welcome</title>
-        <link rel="stylesheet" href="https://jsdelivr.net" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-        <link rel="stylesheet" href="{% static 'css/capapp.css' %}">
-    </head>
-    <body>
-        <header class="page-header" style="background-color: #5694ea; padding: 15px 0; margin-bottom: 20px;">
-            <div class="container d-flex justify-content-between align-items-center">
-                <h1 style="margin: 0;"><a href="/" style="font-family: 'Lobster', sans-serif; color: #ebecef; text-decoration: none; font-size: 28pt;">Student Center Home</a></h1>
-                <div class="top-menu">
-                    <a href="{% url 'home' %}" class="menu-icon" style="color: #ffffff; margin-left: 15px;">
-                        {% include './icons/justify.svg' %}
-                    </a>
-                    <a href="{% url 'student_scan' %}" class="menu-icon" style="color: #ffffff; margin-left: 15px;">
-                        {% include './icons/plus-square.svg' %}
-                    </a>
-                </div>
-            </div>
-        </header>
 
-        {% if request.user.is_authenticated %}
-        <div class="container my-4">
-            <nav class="home-nav-container">
-                <ul class="flat-menu">
-                    <li><a href="{% url 'student_scan' %}">Student Scan</a></li>
-                    <li><a href="{% url 'my_students' %}">My Students</a></li>
-                    <li><a href="{% url 'guardian' %}">All Guardians</a></li>
-                </ul>
-            </nav>
+{% block content %}
+<div style="max-width: 450px; margin: 60px auto; padding: 30px; background-color: #1a1a1a; border: 1px solid #333333; border-radius: 8px; color: #ffffff; text-align: center; box-shadow: 0 4px 15px rgba(0,0,0,0.5); font-family: Arial, sans-serif;">
+
+    <form method="POST" class="login-form">
+        {% csrf_token %}  
+
+        <h2 style="font: sans-serif, !important; color: #5694ea; font-size: 24pt; margin: 0 0 10px 0;">
+            Student Center
+        </h2>
+        <h3 style="font-size: 13pt; color: #ebecef; margin-bottom: 20px; font-weight: normal;">Account Login</h3>
+        <hr style="border: 0; border-top: 1px solid #2d2d2d; margin-bottom: 25px;">
+
+        {% if messages %}
+        <div style="margin-bottom: 20px; text-align: left;">
+            {% for message in messages %}
+                <div style="background-color: #2c0b0e; color: #ea868f; padding: 10px; border-radius: 4px; font-size: 10pt; font-weight: bold;">
+                    {{ message }}
+                </div>
+            {% endfor %}
         </div>
         {% endif %}
 
-        <main class="content container">
-            <div class="row">
-                <div class="col">
-                    {% block content %}
-                    {% endblock %}
-                </div>
-            </div>
-        </main>
-    </body>
-</html>
+        <div style="text-align: left; margin-bottom: 20px;">
+            <label for="id_username" style="display: block; font-size: 11pt; font-weight: bold; margin-bottom: 8px; color: #ebecef;">Username</label>
+            <input type="text" name="username" id="id_username" placeholder="Enter username" required
+                style="width: 100%; padding: 12px; background-color: #000000; border: 2px solid #333333; border-radius: 4px; color: #ffffff; box-sizing: border-box; font-size: 11pt;">
+        </div>
+
+        <div style="text-align: left; margin-bottom: 25px;">
+            <label for="id_password" style="display: block; font-size: 11pt; font-weight: bold; margin-bottom: 8px; color: #ebecef;">Password</label>
+            <input type="password" name="password" id="id_password" placeholder="Password" required
+                style="width: 100%; padding: 12px; background-color: #000000; border: 2px solid #333333; border-radius: 4px; color: #ffffff; box-sizing: border-box; font-size: 11pt;">
+        </div>
+
+        <div style="margin-bottom: 20px;">
+            <button type="submit" style="width: 100%; padding: 12px; background-color: #5694ea; color: #000000; border: none; border-radius: 4px; font-size: 12pt; font-weight: bold; cursor: pointer;">
+                Sign In
+            </button>
+        </div>
+
+        <p style="margin: 0; font-size: 10.5pt; color: #888888;">
+            Don't have an account? <a href="{% url 'register' %}" style="color: #5694ea; text-decoration: none; font-weight: bold;">Register here</a>
+        </p>
+    </form>
+</div>
+{% endblock %}
+
